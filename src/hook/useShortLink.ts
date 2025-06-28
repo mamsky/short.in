@@ -6,20 +6,20 @@ import { toast } from "sonner";
 export const useShortLink = () => {
   const queryClient = useQueryClient();
   const { mutateAsync, isPending, isSuccess, data } = useMutation<
-    { message: string; short_link: string },
+    { message: string; data: string },
     AxiosError,
     { url: string }
   >({
     mutationKey: ["short-url"],
     mutationFn: async (data: { url: string }) => {
       const response = await axios.post(
-        "https://api2.alfiandirizki.com/",
+        "http://localhost:8080/short-link",
         data
       );
       return response.data;
     },
     onSuccess: async (res) => {
-      await queryClient.setQueryData(["short-url"], res.short_link);
+      await queryClient.setQueryData(["short-url"], res.data);
       toast.success(res.message);
     },
     onError: (error) => {

@@ -16,7 +16,7 @@ const InputLink = () => {
       reset({
         url: "",
       });
-      setUrl((await res).short_link);
+      setUrl((await res).data);
     } else {
       toast.error("Error Link Url");
     }
