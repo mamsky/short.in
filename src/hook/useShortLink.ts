@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "sonner";
 
 export const useShortLink = () => {
+  const baseUrl = import.meta.env.VITE_BASE_URL;
   const queryClient = useQueryClient();
   const { mutateAsync, isPending, isSuccess, data } = useMutation<
     { message: string; data: string },
@@ -12,10 +13,7 @@ export const useShortLink = () => {
   >({
     mutationKey: ["short-url"],
     mutationFn: async (data: { url: string }) => {
-      const response = await axios.post(
-        "http://localhost:8080/short-link",
-        data
-      );
+      const response = await axios.post(`${baseUrl}/short-link`, data);
       return response.data;
     },
     onSuccess: async (res) => {
